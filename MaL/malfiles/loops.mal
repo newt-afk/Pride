@@ -1,0 +1,9 @@
+; many of these require you to quote your lists first, so that we can actually re-evaluate them everytime. Otherwise, the list gets evaluated once, and that's it's value for the rest of time.
+(def! while (fn* [bb, ee] (if (eval bb) (do (eval ee) (while bb ee)))))
+; bb and ee stand for bool and exec
+(def! dowhile (fn* [bb, ee] (do (eval ee) (if (eval bb) (while bb ee)))))
+; same as above, just do-while instead of while
+
+(def! for (fn* [ss, bb, ff, ee] (do (eval ss) (while bb '(do (eval ee) (eval ff) nil)))))
+;UNTESTED! ss for starting action, bb for bool comparison action, ff for finishing loop action, and ee for executive action.
+
